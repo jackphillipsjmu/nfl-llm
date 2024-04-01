@@ -1,0 +1,10 @@
+llama-index==0.10.25
+llama-index-core
+llama-index-readers-file
+llama-index-llms-ollama
+llama-index-embeddings-huggingface
+streamlit==1.32.0
+plotly==5.17.0
+st-pages==0.4.5
+streamlit-extras==0.3.4
+validators

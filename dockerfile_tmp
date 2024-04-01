@@ -1,0 +1,27 @@
+FROM python:3.11.5
+
+# Get compiler stuff to build from tar for pyodbc
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends gcc g++ libpq-dev unixodbc-dev unixodbc iputils-ping
+
+WORKDIR /app
+
+# copy all files
+COPY . .
+
+# pip install python deps from requirements.txt
+RUN pip install -r requirements.txt
+
+# expose port 80
+EXPOSE 80
+
+# Set OpenAI environment variable
+# When using OpenAI you will need to expose your Secret Key for use.
+# If you hit their limit it could take ~5 minutes to have successful requests again.
+# Hints that you hit the quota can sometimes be difficult but an HTTP 429 is typical
+# so check the OpenAI usage dashboard to see if you've used your credits.
+# The API Key will need to be defined when running the run_ui.sh bash script
+ENV OPENAI_API_KEY ${OPENAI_API_KEY}
+
+# run the app
+CMD ["streamlit", "run", "Home.py", "--server.port=80", "--server.address=0.0.0.0", "--browser.gatherUsageStats=false"]
